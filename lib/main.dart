@@ -73,7 +73,14 @@ class _Header extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 28, // 56×56 圆形头像
-              child: Text('胡', style: TextStyle(fontSize: 20)),
+              backgroundColor: Colors.teal, // teal 底
+              child: Text(
+                '胡',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                ), // 白色"胡"字20号
+              ),
             ),
             Positioned(
               right: 0,
@@ -122,25 +129,18 @@ class _StatsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12), // 统计条内留白
-      decoration: BoxDecoration(
-        color: Colors.teal.shade50, // 浅 teal 纯色底
-        borderRadius: BorderRadius.circular(8), // 圆角8
-      ),
-      child: const Row(
-        children: [
-          Expanded(
-            child: _StatItem(number: '12', label: '讲义'),
-          ),
-          Expanded(
-            child: _StatItem(number: '50', label: '题库'),
-          ),
-          Expanded(
-            child: _StatItem(number: '3', label: '阶段'),
-          ),
-        ],
-      ),
+    return const Row(
+      children: [
+        Expanded(
+          child: _StatItem(number: '12', label: '讲义'),
+        ),
+        Expanded(
+          child: _StatItem(number: '50', label: '题库'),
+        ),
+        Expanded(
+          child: _StatItem(number: '3', label: '阶段'),
+        ),
+      ],
     );
   }
 }
@@ -175,11 +175,30 @@ class _TagCloud extends StatelessWidget {
       spacing: 8, // 横向间距8
       runSpacing: 6, // 纵向间距6
       children: const [
-        Chip(label: Text('Flutter')),
-        Chip(label: Text('Dart')),
-        Chip(label: Text('TraeWork')),
-        Chip(label: Text('TraeCode')),
+        _TagChip('Flutter'),
+        _TagChip('Dart'),
+        _TagChip('TraeWork'),
+        _TagChip('TraeCode'),
       ],
+    );
+  }
+}
+
+class _TagChip extends StatelessWidget {
+  final String text;
+
+  const _TagChip(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Chip(
+      label: Text(text),
+      backgroundColor: Colors.teal.shade50, // 浅 teal 底
+      side: BorderSide.none, // 去描边，贴合设计稿
+      labelStyle: TextStyle(color: Colors.teal.shade800), // 深 teal 字
+      padding: const EdgeInsets.symmetric(horizontal: 8), // 收紧内边距，保证四枚同行
+      labelPadding: EdgeInsets.zero, // 清掉默认 labelPadding，与 padding 叠加会超宽
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // 去掉默认48触控高度
     );
   }
 }
