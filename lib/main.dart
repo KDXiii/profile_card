@@ -22,11 +22,23 @@ class ProfileCardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100, // 浅灰页面底，衬出白卡
       body: Center(
         // 卡片容器：宽340，内边距16，居中
         child: Container(
           width: 340,
           padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white, // 白底
+            borderRadius: BorderRadius.circular(12), // 圆角12
+            boxShadow: const [
+              BoxShadow(
+                blurRadius: 8, // 阴影 blur 8
+                offset: Offset(0, 2), // offset(0,2)
+                color: Colors.black12,
+              ),
+            ],
+          ),
           child: const Column(
             mainAxisSize: MainAxisSize.min, // 高度随内容收缩
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,11 +66,31 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       children: [
-        CircleAvatar(
-          radius: 28, // 56×56 圆形头像
-          child: Text('胡', style: TextStyle(fontSize: 20)),
+        Stack(
+          // 层叠角标：头像 + 右下在线点
+          children: [
+            CircleAvatar(
+              radius: 28, // 56×56 圆形头像
+              child: Text('胡', style: TextStyle(fontSize: 20)),
+            ),
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: Container(
+                width: 12,
+                height: 12, // 12×12 在线点
+                decoration: BoxDecoration(
+                  color: Colors.green, // 绿色在线状态
+                  shape: BoxShape.circle,
+                  border: Border.fromBorderSide(
+                    BorderSide(color: Colors.white, width: 2),
+                  ), // 白边与头像隔开
+                ),
+              ),
+            ),
+          ],
         ),
         SizedBox(width: 12), // 头像右侧间距12
         Expanded(
@@ -90,18 +122,25 @@ class _StatsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      children: [
-        Expanded(
-          child: _StatItem(number: '12', label: '讲义'),
-        ),
-        Expanded(
-          child: _StatItem(number: '50', label: '题库'),
-        ),
-        Expanded(
-          child: _StatItem(number: '3', label: '阶段'),
-        ),
-      ],
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 12), // 统计条内留白
+      decoration: BoxDecoration(
+        color: Colors.teal.shade50, // 浅 teal 纯色底
+        borderRadius: BorderRadius.circular(8), // 圆角8
+      ),
+      child: const Row(
+        children: [
+          Expanded(
+            child: _StatItem(number: '12', label: '讲义'),
+          ),
+          Expanded(
+            child: _StatItem(number: '50', label: '题库'),
+          ),
+          Expanded(
+            child: _StatItem(number: '3', label: '阶段'),
+          ),
+        ],
+      ),
     );
   }
 }
